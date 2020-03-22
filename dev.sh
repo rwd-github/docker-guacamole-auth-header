@@ -11,6 +11,7 @@ additionalparams=""
 
 function build {
 	docker system prune
+	diff -u start.sh.original start.sh > start.sh.patch || true
 	docker build ${stdparams} -t ${imagetag} ${mypath}
 }
 

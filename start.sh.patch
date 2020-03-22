@@ -1,0 +1,13 @@
+--- start.sh.original	2020-01-25 05:39:37.000000000 +0100
++++ start.sh	2020-03-22 16:54:31.368195824 +0100
+@@ -577,6 +577,10 @@
+     # Install webapp
+     rm -Rf /usr/local/tomcat/webapps/${WEBAPP_CONTEXT:-guacamole}
+     ln -sf /opt/guacamole/guacamole.war /usr/local/tomcat/webapps/${WEBAPP_CONTEXT:-guacamole}.war
++    
++    # link auth-header
++    find /root/download/guacamole-auth-header/ -name "*.jar" | awk -F/ '{print $NF}' | \
++    xargs -I '{}' ln -s "/root/download/guacamole-auth-header/{}" "${GUACAMOLE_EXT}/1-{}"
+ 
+     # Start tomcat
+     cd /usr/local/tomcat
