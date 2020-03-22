@@ -1,0 +1,1 @@
+# docker-guacamole-auth-header
