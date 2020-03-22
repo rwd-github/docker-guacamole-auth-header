@@ -1,10 +1,11 @@
 FROM guacamole/guacamole:latest
 
-ENV guacamole_version 1.1.0
 RUN mkdir -p /root/download/guacamole-auth-header
-ADD http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${guacamole_version}/binary/guacamole-auth-header-${guacamole_version}.tar.gz /root/download/guacamole-auth-header-${guacamole_version}.tar.gz
-RUN cd /root/download \
-	&& tar -xzf guacamole-auth-header-${guacamole_version}.tar.gz \
+RUN myGuacVer=$(ls /opt/guacamole/postgresql/guacamole-auth-jdbc-postgresql-*.jar|sed 's/.*-\([0-9\.]*\)\.jar/\1/') \
+	&& echo "Guacamole-Version: ${myGuacVer}" \
+	&& curl -sL "http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${myGuacVer}/binary/guacamole-auth-header-${myGuacVer}.tar.gz" --output /root/download/guacamole-auth-header-${myGuacVer}.tar.gz \
+	&& cd /root/download \
+	&& tar -xzf guacamole-auth-header-${myGuacVer}.tar.gz \
         -C "/root/download/guacamole-auth-header"          \
         --wildcards                                        \
         --no-anchored                                      \
